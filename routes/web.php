@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\User\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,24 +17,19 @@ use App\Http\Controllers\PhotoController;
 
 Route::get('/', function (){
     return 11;
-})->middleware('auth');
+});
 
 Route::get('/login',array('as'=>'login',function(){
     return view('auth/login');
 }));
 
-Route::post('/welcome/login', function(){
-    if(!empty($_REQUEST['_method']) && $_REQUEST['_method'] == 'POST'){
-        return 'check';
-    }
-    return 2;
-})->name('welcome.login');
+Route::post('/welcome/login',  [AuthController::class, 'index'])->name('welcome.login');
 
 Route::get('newtest/{slug}', [PhotoController::class, 'index']);
 
 //Route::get('photo', 'App\Http\Controllers\PhotoController@index');
 
-Route::group(['prefix' => 'admin'], function (){
+Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function (){
     Route::get('/', function () {
         return '12323';
     });
