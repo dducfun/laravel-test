@@ -2,13 +2,14 @@
 
 @section('title', 'Page Login')
 
-@section('sidebar')
-    @parent
-    <p>This is appended to the master sidebar.</p>
+@section('style_background')
+    background-image: url(https://img.freepik.com/premium-photo/blurred-motion-blue-abstract-background-with-lines_371174-1261.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 @endsection
 
 @section('content')
-    <section class="vh-100">
+    <section class="vh-100 container">
         <div class="container-fluid h-custom">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-9 col-lg-6 col-xl-5">
@@ -16,7 +17,7 @@
                          class="img-fluid" alt="Sample image">
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <form action="{{ route('welcome.login') }}" method="POST">
+                    <form action="{{ route('login') }}" method="POST">
                         @method('POST')
                         @csrf
                         <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
@@ -68,7 +69,7 @@
                             <button type="submit" class="btn btn-primary btn-lg"
                                     style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
                             <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account?
-                                <a href="#!" class="link-danger">Register</a></p>
+                                <a href="{{ route('register') }}" class="link-danger">Register</a></p>
                         </div>
 
                     </form>

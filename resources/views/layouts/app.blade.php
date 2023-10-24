@@ -12,7 +12,7 @@
 <body>
 
 
-<div class="container">
+<div style="@yield('style_background')">
     @yield('content')
 </div>
 </body>

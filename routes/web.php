@@ -16,18 +16,14 @@ use App\Http\Controllers\User\AuthController;
 */
 
 Route::get('/', function (){
-    return 11;
+    return auth()->user();
 });
 
-Route::get('/login',array('as'=>'login',function(){
-    return view('auth/login');
-}));
+Route::get('/login',[AuthController::class, 'login']);
+Route::post('login',  [AuthController::class, 'index'])->name('login');
 
-Route::post('/welcome/login',  [AuthController::class, 'index'])->name('welcome.login');
-
-Route::get('newtest/{slug}', [PhotoController::class, 'index']);
-
-//Route::get('photo', 'App\Http\Controllers\PhotoController@index');
+Route::get('/register', [AuthController::class, 'create']);
+Route::post('register', [AuthController::class, 'store'])->name('register');
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function (){
     Route::get('/', function () {

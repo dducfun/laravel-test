@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Validator;
 
 class AuthController extends Controller
 {
@@ -17,11 +20,16 @@ class AuthController extends Controller
     public function index(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password'], 'active' => 1])) {
             return redirect()->intended('dashboard');
         }else{
             return view('auth/login')->with('email', $credentials['email']);
         }
+    }
+
+    public function login()
+    {
+        return view('auth/login');
     }
 
     /**
@@ -31,7 +39,7 @@ class AuthController extends Controller
      */
     public function create()
     {
-        //
+        return view('auth/regist');
     }
 
     /**
@@ -42,7 +50,23 @@ class AuthController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:40',
+            'email' => 'required|email',
+            'password' => 'required',
+            'repeat_pass' => 'required|same:password',
+        ]);
+        $user = new User();
+        $user->password = Hash::make($request['password']);
+        $user->email = $request['email'];
+        $user->name = $request['name'];
+        $user->id = getTimeStampAsId();
+        $user->save();
+
+        auth()->login($user);
+
+        return redirect()->to('/');
+
     }
 
     /**
