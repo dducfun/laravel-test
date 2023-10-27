@@ -22,7 +22,13 @@ class LoginController extends Controller
         ]);
 
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = Auth::guard('admin')->user();
             $request->session()->regenerate();
+            $request->session()->put('admin.login', [
+                'email'=>$user->email,
+                'token'=>$user->getRememberToken(),
+                'id'=>$user->id
+            ]);
 
             return redirect('admin/dashboard');
         }
@@ -39,6 +45,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('admin/login');
     }
 }
