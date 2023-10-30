@@ -5,6 +5,7 @@ use App\Http\Controllers\User\AuthController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\LoginController;
 use \App\Http\Controllers\Admin\PageController;
+use \App\Http\Controllers\Frontend\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +18,11 @@ use \App\Http\Controllers\Admin\PageController;
 |
 */
 
-Route::get('/', function (){
-    return auth()->user();
-});
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/login',[AuthController::class, 'login']);
 Route::post('login',  [AuthController::class, 'index'])->name('login');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register', [AuthController::class, 'create']);
 Route::post('register', [AuthController::class, 'store'])->name('register');

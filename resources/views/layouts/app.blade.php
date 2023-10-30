@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>App Name - @yield('title')</title>
+    <title>@yield('title')</title>
 
     <!-- Boostrap 4 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
