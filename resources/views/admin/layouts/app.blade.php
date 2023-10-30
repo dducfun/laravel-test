@@ -23,11 +23,11 @@
 
 <body class="{{ $class ?? '' }}">
 
-    @guest
+    @guest('admin')
         @yield('admin.content')
     @endguest
 
-    @auth
+    @auth('admin')
         @if (in_array(request()->route()->getName(), ['sign-in-static', 'sign-up-static', 'login', 'register', 'recover-password', 'rtl', 'virtual-reality']))
             @yield('admin.content')
         @else

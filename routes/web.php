@@ -28,10 +28,11 @@ Route::get('/register', [AuthController::class, 'create']);
 Route::post('register', [AuthController::class, 'store'])->name('register');
 
 Route::get('admin/login', [LoginController::class, 'show'])->name('admin.login');
-Route::post('admin/login-submit', [LoginController::class, 'login'])->name('admin.submit');
+Route::post('admin/login', [LoginController::class, 'login'])->name('admin.login');
+
 Route::group(['middleware' => 'auth.admin','prefix' => 'admin'], function (){
     Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.home');
-    Route::get('logout', [LoginController::class, 'logout'])->name('admin.logout');
+    Route::post('logout', [LoginController::class, 'logout'])->name('admin.logout');
 
     Route::get('profile', [PageController::class, 'profile'])->name('admin.profile');
     Route::get('page', [PageController::class, 'index'])->name('admin.page');

@@ -20,7 +20,7 @@
                                     <p class="mb-0">Enter your email and password to sign in</p>
                                 </div>
                                 <div class="card-body">
-                                    <form role="form" method="POST" action="{{ route('admin.submit') }}">
+                                    <form role="form" method="POST" action="{{ route('admin.login') }}">
                                         @csrf
                                         @method('post')
                                         <div class="flex flex-col mb-3">
