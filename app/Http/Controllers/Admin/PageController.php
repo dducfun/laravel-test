@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 class PageController extends Controller
 {
     /**
@@ -15,26 +16,18 @@ class PageController extends Controller
      */
     public function index(string $page)
     {
-        if (view()->exists("pages.{$page}")) {
+        if (view()->exists("admin.pages.{$page}")) {
             return view("admin.pages.{$page}");
         }
 
         return abort(404);
     }
 
-    public function vr()
-    {
-        return view("admin.pages.virtual-reality");
-    }
-
-    public function rtl()
-    {
-        return view("admin.pages.rtl");
-    }
-
     public function profile()
     {
-        return view("admin.pages.profile-static");
+        $data = [];
+        $data['email']= auth('admin')->user()->email;
+        return view("admin.pages.profile-static")->with('data', $data);
     }
 
     public function signin()

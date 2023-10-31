@@ -12,13 +12,13 @@
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
-    <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="{{ asset('admin/assets/css/nucleo-icons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('admin/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- CSS Files -->
-    <link id="pagestyle" href="assets/css/argon-dashboard.css" rel="stylesheet" />
+    <link id="pagestyle" href="{{ asset('admin/assets/css/argon-dashboard.css') }}" rel="stylesheet" />
 </head>
 
 <body class="{{ $class ?? '' }}">
@@ -28,7 +28,7 @@
     @endguest
 
     @auth('admin')
-        @if (in_array(request()->route()->getName(), ['sign-in-static', 'sign-up-static', 'login', 'register', 'recover-password', 'rtl', 'virtual-reality']))
+        @if (in_array(request()->route()->getName(), ['admin.sign-in-static', 'admin.sign-up-static', 'admin.login', 'register', 'admin.recover-password']))
             @yield('admin.content')
         @else
             @if (!in_array(request()->route()->getName(), ['profile', 'profile-static']))

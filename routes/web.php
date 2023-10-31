@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'admin'], function (){
     Route::post('logout', [LoginController::class, 'logout'])->name('admin.logout');
 
     Route::get('profile', [PageController::class, 'profile'])->name('admin.profile');
-    Route::get('page', [PageController::class, 'index'])->name('admin.page');
+    Route::get('page/{page}', [PageController::class, 'index'])->name('admin.page');
     Route::get('rtl', [PageController::class, 'rtl'])->name('admin.rtl');
     Route::get('sign-in-static', [PageController::class, 'signin'])->name('admin.sign-in-static');
     Route::get('sign-up-static', [PageController::class, 'sign-up-static'])->name('admin.sign-up-static');

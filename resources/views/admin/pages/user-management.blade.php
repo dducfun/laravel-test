@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('admin.layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('admin.content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'User Management'])
+    @include('admin.layouts.navbars.auth.topnav', ['title' => 'User Management'])
     <div class="row mt-4 mx-4">
         <div class="col-12">
             <div class="alert alert-light" role="alert">
@@ -112,4 +112,5 @@
             </div>
         </div>
     </div>
+    @include('admin.layouts.footers.auth.footer')
 @endsection

@@ -28,6 +28,17 @@
             </a>
         </form>
     </div>
+    <div class="btn btn-danger">
+        <form role="form" method="get" action="{{ route('admin.login') }}" id="admin-form">
+            @csrf
+            <a href="{{ route('admin.login') }}"
+               onclick="event.preventDefault(); document.getElementById('admin-form').submit();"
+               class="nav-link text-white font-weight-bold px-0">
+                <i class="fa fa-user me-sm-1"></i>
+                <span class="d-sm-inline d-none">Admin</span>
+            </a>
+        </form>
+    </div>
     @endauth
 
 </div>
