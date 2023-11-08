@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use http\Env\Request;
+use App\Models\Admin\UserAdmin;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\UserAdmin;
 
 class PageController extends Controller
 {
@@ -37,6 +37,7 @@ class PageController extends Controller
         if(!empty($page)){
             switch ($page){
                 case 'user-management':
+                    ddBug($request);
                     $request->validate([
                         'email' => 'required',
                         'password' => 'required'
@@ -46,6 +47,19 @@ class PageController extends Controller
                         'password' => bcrypt($request->password)
                     ];
                     $data = DB::table('user_admin')->where('id', '=', $id)->update($dataUpdate);
+            }
+        }
+
+        return abort(404);
+    }
+
+    public function viewEdit(Request $request, string $page, int $id)
+    {
+        if(!empty($page)){
+            switch ($page){
+                case 'user-management':
+                    $data = DB::table('user_admin')->where('id', '=', $id)->first();
+                    return view("admin.pages.profile-static")->with('data', (array) $data);
             }
         }
 
@@ -62,17 +76,31 @@ class PageController extends Controller
     public function profile()
     {
         $data = [];
-        $data['email']= auth('admin')->user()->email;
+        $id= auth('admin')->user()->id;
+        $data = DB::table('user_admin')->where('id', '=', $id);
         return view("admin.pages.profile-static")->with('data', $data);
     }
 
-    public function signin()
+    public function editProfile(Request $request)
     {
-        return view("admin.pages.sign-in-static");
-    }
+        $credentials = $request->validate([
+            'item[username]' => ['min:6'],
+            'item[postal_code]' => ['integer'],
+            'item[about_me]' => ['max:255'],
+        ]);
 
-    public function signup()
-    {
-        return view("admin.pages.sign-up-static");
+        $item = $request['item'];
+        if(empty($item['id'])){
+            return abort(404);
+        }
+        try {
+            $user = UserAdmin::find($item['id']);
+            $user->update($item);
+
+            return  redirect()->route('admin.page', ['user-management']);
+//            redirect(route('admin.page', ['user-management']));
+        } catch (\Exception $e){
+           echo $e->getMessage();
+        }
     }
 }

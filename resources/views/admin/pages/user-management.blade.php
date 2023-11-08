@@ -5,6 +5,7 @@
     <div class="row mt-4 mx-4">
         <div class="col-12">
             <div class="alert alert-light" role="alert">
+                {{ __('fun') }}
                 Đây là danh sách user admin.
             </div>
             <div class="card mb-4">
@@ -20,7 +21,7 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Create Date</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 w-10">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,14 +45,15 @@
                                                 <p class="text-sm font-weight-bold mb-0">{{ $cust->remember_token ?? 'NULL' }}</p>
                                             </td>
                                             <td class="align-middle text-end">
-                                                <div class="d-flex px-3 py-1 justify-content-center align-items-center">
-                                                    <a href="{{ route('admin.edit', ['user_manager' , $cust->id]) }}" class="text-sm font-weight-bold mb-0">Edit</a>
-                                                    <form role="form" method="post" action="{{ route('admin.delete',  ['user_manager', $cust->id]) }}" id="delete-form">
+                                                <div class="d-flex px-3 py-1 align-items-center justify-content-around">
+                                                    <a href="{{ route('admin.edit', ['user-management' , $cust->id]) }}" class="btn btn-primary">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+                                                    <form role="form" method="post" action="{{ route('admin.delete',  ['user-management', $cust->id]) }}" id="delete-form">
                                                         @csrf
                                                         <button type="submit"
-                                                           class="nav-link text-white font-weight-bold px-0">
-                                                            <i class="fa fa-user me-sm-1"></i>
-                                                            <span class="d-sm-inline d-none">Delete</span>
+                                                           class="btn btn-danger">
+                                                            <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </form>
                                                 </div>
